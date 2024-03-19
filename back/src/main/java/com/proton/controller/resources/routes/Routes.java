@@ -18,5 +18,11 @@ public class Routes {
     public String welcomeAdmin() {
         return "";
     }
+
+    @GetMapping("/authenticate")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String home() {
+        return "";
+    }
 }
     
