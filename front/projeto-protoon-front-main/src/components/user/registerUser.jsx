@@ -33,7 +33,7 @@ function RegisterFormUser() {
         axios.post("http://localhost:8080/users", {
           username: formData.username,
           password: formData.password,
-          role: "ROLE_" + formData.role
+          role: formData.role ? "ROLE_" + formData.role : "ROLE_MUNICIPE"
         }).then(response => {
           console.log(response.data);
           alert("Dados enviados com sucesso!");

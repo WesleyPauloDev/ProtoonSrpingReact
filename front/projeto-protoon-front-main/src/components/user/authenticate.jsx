@@ -3,23 +3,42 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 function LoginFormAuth() {
-  const token = ""
+  const token = "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktand0Iiwic3ViIjoiV2VzbGV5IiwiZXhwIjoxNzEwNzk0OTY4LCJpYXQiOjE3MTA3OTQ5NTgsInNjb3BlIjoiUk9MRV9BRE1JTiJ9.yByeV3sA_VOAzo5U-yHDz48e6i33aeBf2oZSLCRRIBjKS5M3ZUuTapqgWpBnaV5b2QKGID0UveyFzQYmq4YbagLd29QFFYvcnXz7Xtd_dQyw-ICmU1gyUSqykKt8uuUpj3ALsdunt4TmEQ-5TQy0eM_x6eOZx66TXcPDlPzD6eFlTlJcxrZ5LSCIXejkypo-jC8-KUu8HSMyzSykjKHHPWslfsw631Pbb0CWsqMm6E2e9oZET6f8Czlqo7_3q2L4KvlF5JMN6O6qnJ1Or1i1StvSzI3eEiOJur078Ajtj-2YJxEAZcpDXZ4zUOnQEBtNoyozbPfnVKd28phsDgUmbA"
 
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: ""
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await axios.get(`http://localhost:8080/check/${username}?password=${password}`, {
+      auth: {
+        username: "Admin",
+        password: "Admin"
+      }
+    })
     try {
-      const response = await axios.get('http://localhost:8080/users');
+      const response = await axios.get('http://localhost:8080/users', {
+        auth: {
+          username: "Admin",
+          password: "Admin"
+        }
+      });
       const users = response.data;
+      alert(users[4].username)
+      alert(users[0].password)
+      alert(password)
+      alert(username)
       const user = users.find(u => u.username === username && u.password === password);
       if (user) { 
         console.log('Login bem-sucedido!');
         alert('Login bem-sucedido!');
-        if (user.role === 'ADMIN') {
+        if (user.role === 'ROLE_ADMIN') {
           navigate('/welcomeAdmin', { state: { username, password } });
         } else {
           navigate('/welcomeUser', { state: { username, password } });
@@ -29,9 +48,49 @@ function LoginFormAuth() {
       }
     } catch (error) {
       console.error('Erro ao enviar os dados:', error);
-      alert('Erro ao fazer login. Verifique suas credenciais.');
+      alert('Erro ao fazer login. Verifique suas credenciais.');        
     }
   };
+
+  //   try {
+  //     const response = await axios.get('http://localhost:8080/users');
+  //     const users = response.data;
+  //     const user = users.find(u => u.username === username && u.password === password);
+  //     if (user) { 
+  //       console.log('Login bem-sucedido!');
+  //       alert('Login bem-sucedido!');
+  //       if (user.role === 'ROLE_ADMIN') {
+  //         navigate('/welcomeAdmin', { state: { username, password } });
+  //       } else {
+  //         navigate('/welcomeUser', { state: { username, password } });
+  //       }
+  //     } else {
+  //       alert('Credenciais inválidas. Verifique suas credenciais.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Erro ao enviar os dados:', error);
+  //     alert('Erro ao fazer login. Verifique suas credenciais.');        
+  //   }
+  // };
+  
+  
+  //     const response = axios.post('http://localhost:8080/users/check-password', {
+  //       auth: {
+  //         username: "Wesley2",
+  //         password: "$2a$10$F8Rrr.MBTso5.RDnqt1TKOyr5PSPgE842B7.7kdfV5vM.CuKZTvPy"
+  //     }
+  //     // headers: { Authorization: `Bearer ${token}` }
+  //   })
+  //   .then(response => {
+  //       alert('OK');
+  //         if (response.data) {
+  //             console.log('Senha válida');
+  //         } else {
+  //             console.log('Senha inválida');
+  //         }
+  //     })
+  //     .catch(error => {
+  //         alert('Erro ao verificar senha');
 
   useEffect(() => {
     const fetchUsers = async () => {
