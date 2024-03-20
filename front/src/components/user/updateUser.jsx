@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import bcrypt from 'bcryptjs';
 
 function UpdateFormUser() {
   const { username } = useParams();
@@ -26,9 +27,10 @@ function UpdateFormUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const hashedPassword = bcrypt.hashSync(formData.password, 10);
       const response = await axios.put(`http://localhost:8080/users/${username}`, {
         username: formData.username,
-        password: formData.password
+        password: hashedPassword
       });
       
       console.log(response.data);

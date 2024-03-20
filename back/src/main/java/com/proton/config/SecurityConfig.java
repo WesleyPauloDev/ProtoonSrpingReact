@@ -37,8 +37,7 @@ public class SecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/authenticate").permitAll()
-                .requestMatchers("/check").permitAll()
+                .requestMatchers("/authenticate").permitAll()//Esta Rota te envia o Token(se precisar) através de username e senha
                 .requestMatchers("/users/**").permitAll()
                 .requestMatchers("/welcomeUser").hasRole("MUNICIPE")
                 .requestMatchers("/welcomeAdmin").hasRole("ADMIN")

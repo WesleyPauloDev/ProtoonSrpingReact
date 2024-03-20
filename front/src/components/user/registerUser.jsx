@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function RegisterFormUser() {
-  const [role, setRole] = useState("MUNICIPE");
+  const [role, setRole] = useState("MUNICIPE"); //Seta o radio Button paa Municipe
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -13,7 +13,7 @@ function RegisterFormUser() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "role") {
+    if (name === "role") { //Escuta radio button
       console.log(role); 
       setRole(value);
       setFormData({
@@ -62,7 +62,7 @@ function RegisterFormUser() {
           name="password"
           value={formData.password}
           onChange={handleChange}
-        />
+        />        
       </div><br></br><br></br>
       <div>
         <label>Role:</label><br />

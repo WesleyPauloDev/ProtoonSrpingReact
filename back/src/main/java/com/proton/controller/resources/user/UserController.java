@@ -49,10 +49,6 @@ public class UserController {
     // Método que responde á requisição do tipo POST do HTTP
     @PostMapping
     public ResponseEntity<User> insert(@RequestBody User obj){
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String senha = passwordEncoder.encode(obj.getPassword());
-        obj.setPassword(senha);
-
 		obj = userService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}").buildAndExpand(obj.getUsername()).toUri();
 		return ResponseEntity.created(uri).body(obj); //Código 201
