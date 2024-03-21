@@ -26,16 +26,11 @@ public class UserAuthenticated implements UserDetails {
     return user.getPassword();
   }
 
-  // @Override
-  // public Collection<? extends GrantedAuthority> getAuthorities() {
-  //   return List.of(() -> "read");
-  // }
-
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.user.getRole()));
   }
-
+  //Os quatro métodos abaixo são obrigatórios pela Interface, por enquanto não estamos usando
   @Override
   public boolean isAccountNonExpired() {
     return true;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proton.security.AuthenticationService;
 
 @RestController
-@RequestMapping("private")
+@RequestMapping("private") //O token é passado para esta rota se precisar pra algo
 public class PrivateController {
 
   @Autowired
