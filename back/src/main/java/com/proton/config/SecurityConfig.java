@@ -38,9 +38,9 @@ public class SecurityConfig {
     http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/authenticate").permitAll() //Aqui permite todos acessar esta página e seus métodos
                 .requestMatchers("/users").permitAll()
-                .requestMatchers("/welcomeUser").hasRole("MUNICIPE")
+                .requestMatchers("/welcomeUser").hasRole("MUNICIPE") // Nesta página somente user.role = MUNICIPE
                 .requestMatchers("/welcomeAdmin").hasRole("ADMIN")
                 .anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults())

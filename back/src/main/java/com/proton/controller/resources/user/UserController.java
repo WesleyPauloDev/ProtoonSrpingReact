@@ -55,7 +55,7 @@ public class UserController {
 	}
     
     @DeleteMapping(value = "/{username}")
-    // @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')") //Tem que configurar ainda para permitir somente Admim
 	public ResponseEntity<Void> delete(@PathVariable String username){
 		userService.delete(username);
 		return ResponseEntity.noContent().build(); //Resposta para sem conteúdo, código 204

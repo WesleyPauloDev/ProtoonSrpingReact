@@ -20,9 +20,8 @@ public class Routes {
     }
 
     @GetMapping("/authenticate")
-    @PreAuthorize("hasRole('ADMIN')")
     public String home() {
-        return "";
+        return "authenticate";
     }
 }
     

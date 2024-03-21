@@ -15,9 +15,9 @@ function AppRoutes() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/authenticate" element={<LoginFormAuth />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/cadastro" element={<RegisterForm />} />
+                <Route path="/authenticate" element={<LoginFormAuth />} />
                 <Route path="/welcomeUser" element={<TelaUser />} />
                 <Route path="/welcomeAdmin" element={<TelaAdmin />} />
                 <Route path="/registerUser" element={<RegisterFormUser />} />

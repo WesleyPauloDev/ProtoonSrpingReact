@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
+@Data //Esta notação faz todos os métodos da classe através da dependência do Lombok
 @Table(name = "ROLES")
 public class Role {
     

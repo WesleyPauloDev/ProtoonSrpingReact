@@ -17,9 +17,8 @@ public class ProtonApplication {
 		System.out.println("\nRodando...\n");
 	}
 
-	@Bean
+	@Bean //Imprime o hash da senha criado pelo data.sql no inicio da aplicação
 	ApplicationRunner runner(PasswordEncoder passwordEncoder) {
 		return args -> System.out.println(passwordEncoder.encode("password"));
 	}
-
 }
