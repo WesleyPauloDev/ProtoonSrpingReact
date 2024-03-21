@@ -57,7 +57,7 @@ public class MunicipeController {
 
     // TODO NÃO TERÁ DELETE PARA O USUÁRIO >>>> REGRA DE NEGÓCIO
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_PRIVADO')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build(); //Resposta para sem conteúdo, código 204
