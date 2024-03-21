@@ -10,13 +10,13 @@ public class Routes {
     @GetMapping("/welcomeUser")
     @PreAuthorize("hasRole('MUNICIPE')")
     public String welcomeUser() {
-        return "";
+        return "welcomeUser";
     }
 
     @GetMapping("/welcomeAdmin")
     @PreAuthorize("hasRole('ADMIN')")
     public String welcomeAdmin() {
-        return "";
+        return "welcomeAdmin";
     }
 }
     

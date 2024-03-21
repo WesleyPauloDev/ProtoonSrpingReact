@@ -36,11 +36,10 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf.disable())
-    .sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             auth -> auth
                 .requestMatchers("/authenticate").permitAll()
-                .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/users").permitAll()
                 .requestMatchers("/welcomeUser").hasRole("MUNICIPE")
                 .requestMatchers("/welcomeAdmin").hasRole("ADMIN")
                 .anyRequest().authenticated())

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import bcrypt from 'bcryptjs';
 
 function UpdateFormUser() {
-  const { username } = useParams();
+  const { username  } = useParams();
   const [formData, setFormData] = useState({
     username: "",
     password: ""

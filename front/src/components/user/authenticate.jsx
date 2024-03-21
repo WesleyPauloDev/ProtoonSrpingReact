@@ -24,7 +24,7 @@ function LoginFormAuth() {
     try {
       const response = await axios.get('http://localhost:8080/users', {
         auth: {
-          username: "admin",//Permissão para fazer a busca, crie um usuario admin:admin
+          username: "admin",//Permissão para fazer a busca
           password: "admin"
         }
       });
@@ -35,10 +35,26 @@ function LoginFormAuth() {
           console.log('Login bem-sucedido!');
           alert('Login bem-sucedido!');
           const role = user.role
-          if (role === 'ROLE_ADMIN') {
-            navigate('/welcomeAdmin', { state: { username, role } });
+          if (role === 'ADMIN') {
+            const response = await axios.get('http://localhost:8080/welcomeAdmin', {
+              auth: {
+                username: username,
+                password: password
+              }
+            });
+            if (response) {
+              navigate('/welcomeAdmin', { state: { username, password, role } });              
+            }
           } else {
-            navigate('/welcomeUser', { state: { username, role, } });
+            const response = await axios.get('http://localhost:8080/welcomeUser', {
+              auth: { 
+                username: username,
+                password: password
+              }
+            });
+            if (response) {
+              navigate('/welcomeUser', { state: { username, password, role } }); 
+            }
           }
         } else {
           alert('Senha Inválida!');
@@ -67,11 +83,11 @@ function LoginFormAuth() {
 
   const handleDelete = async (username) => {
     try {
-        if (window.confirm('Tem certeza que deseja remover este usuário?')) {
-            // await axios.delete(`http://localhost:8080/users/${username}`);// Para deletar do banco de dados
-            setUsers(users.filter(user => user.username !== username));
-            alert('Usuário deletado com sucesso!');
-        }
+      if (window.confirm('Tem certeza que deseja remover este usuário?')) {
+          await axios.delete(`http://localhost:8080/users/${username}`);// Para deletar do banco de dados
+          setUsers(users.filter(user => user.username !== username));
+          alert('Usuário deletado com sucesso!');
+      }
     } catch (error) {
         console.error('Erro ao deletar o usuário:', error);
         alert('Erro ao deletar o usuário. Por favor, tente novamente.');
@@ -114,10 +130,14 @@ function LoginFormAuth() {
             <div>User: {user.username}</div>
             <div>Role: {user.role ? user.role : "MUNICIPE"}</div>
             <div>
+            {user.username !== "admin" && (
               <button onClick={() => handleDelete(user.username)}>Excluir</button>
+            )}
             </div>
             <div>
-            <button onClick={() => navigate(`/updateUser/${user.username}`)}>Editar</button>
+            {user.username !== "admin" && (
+              <button onClick={() => navigate(`/updateUser/${user.username}`)}>Editar</button>
+            )}
             </div>
           
         </div>

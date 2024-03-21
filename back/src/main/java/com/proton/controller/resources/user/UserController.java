@@ -2,6 +2,7 @@ package com.proton.controller.resources.user;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +30,17 @@ public class UserController {
     
     @Autowired // Para que o Spring faça essa injeção de Dependência do Service
     private UserService userService;
-    
-    // TODO Remover acesso a lista completa! E retirar retorno do atributo senha!    
+      
     // Método que responde á requisição do tipo GET do HTTP
     @GetMapping()
-    // @PreAuthorize("hasRole('ROLE_PRIVADO')")
-    public ResponseEntity<List<User>> findAll(){
+    // @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<User>> findAll() {
         List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list); // Retornar a resposta de sucesso do HTTP e no corpo da resposta vai incluir a lista
     }
 
     @GetMapping(value = "/{username}") // A requisição vai aceitar um ID dentro do URL
-    // @PreAuthorize("hasRole('ROLE_PRIVADO')")
+    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findById(@PathVariable String username){
         User obj = userService.findById(username);
         return ResponseEntity.ok().body(obj);
@@ -55,7 +55,7 @@ public class UserController {
 	}
     
     @DeleteMapping(value = "/{username}")
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable String username){
 		userService.delete(username);
 		return ResponseEntity.noContent().build(); //Resposta para sem conteúdo, código 204
@@ -63,7 +63,9 @@ public class UserController {
     
     @PutMapping(value = "{username}") // A requisição vai aceitar um ID dentro do URL
 	public ResponseEntity<User> update(@PathVariable String username, @RequestBody User obj){
-		obj = userService.update(username, obj);
-		return ResponseEntity.ok(obj);
+        User user = userService.findById(username);
+        obj.setRole(user.getRole()); // Setar a role do usuário encontrado no objeto a ser atualizado
+        obj = userService.update(username, obj);
+        return ResponseEntity.ok(obj);
 	}
 }
