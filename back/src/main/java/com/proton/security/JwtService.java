@@ -20,7 +20,7 @@ public class JwtService {
 
   public String generateToken(Authentication authentication) {
     Instant now = Instant.now();
-    long expiry = 10L;
+    long expiry = 3600L;
 
     String scope = authentication
         .getAuthorities().stream()
